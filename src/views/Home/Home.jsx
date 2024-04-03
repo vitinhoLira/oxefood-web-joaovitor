@@ -23,7 +23,7 @@ export default function Home() {
               <Grid.Column>
                 Bem vindo ao sistema <strong>OxeFood</strong> ! <br />
                 Este sistema foi desenvolvido na disciplina de Desenvolvimento
-                para WEB III. <br /> <br />
+                para WEB IV. <br /> <br />
                 Para acessar o código da <strong>API</strong> do sistema,
                 acesse:{" "}
                 <a
