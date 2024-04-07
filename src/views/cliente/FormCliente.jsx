@@ -1,8 +1,9 @@
-import axios from "axios"
-import React, { useState } from "react"
-import InputMask from "react-input-mask"
-import { Button, Container, Divider, Form, Icon } from "semantic-ui-react"
-import MenuSistema from "../../MenuSistema"
+import axios from "axios";
+import React, { useState } from "react";
+import InputMask from "react-input-mask";
+import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
+import MenuSistema from "../../MenuSistema";
+import { Link } from "react-router-dom";
 
 export default function FormCliente() {
   const [nome, setNome] = useState()
@@ -67,12 +68,13 @@ export default function FormCliente() {
                   required
                   fluid
                   label='CPF'
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
+                  
                 >
                   <InputMask
                     required
                     mask='999.999.999-99'
+                    value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
                   />
                 </Form.Input>
               </Form.Group>
@@ -82,33 +84,38 @@ export default function FormCliente() {
                   fluid
                   label='Fone Celular'
                   width={6}
+                  
+                >
+                  <InputMask mask='(99) 9999.9999' 
                   value={foneCelular}
                   onChange={(e) => setFoneCelular(e.target.value)}
-                >
-                  <InputMask mask='(99) 9999.9999' />
+                  />
                 </Form.Input>
 
                 <Form.Input
                   fluid
                   label='Fone Fixo'
                   width={6}
+                  
+                >
+                  <InputMask mask='(99) 9999.9999'
                   value={foneFixo}
                   onChange={(e) => setFoneFixo(e.target.value)}
-                >
-                  <InputMask mask='(99) 9999.9999' />
+                  />
                 </Form.Input>
 
                 <Form.Input
                   fluid
                   label='Data Nascimento'
                   width={6}
-                  value={dataNascimento}
-                  onChange={(e) => setDataNascimento(e.target.value)}
+                  
                 >
                   <InputMask
                     mask='99/99/9999'
                     maskChar={null}
                     placeholder='Ex: 20/03/1985'
+                    value={dataNascimento}
+                  onChange={(e) => setDataNascimento(e.target.value)}
                   />
                 </Form.Input>
               </Form.Group>
@@ -124,7 +131,7 @@ export default function FormCliente() {
                 color='orange'
               >
                 <Icon name='reply' />
-                Voltar
+                <Link to={'/list-cliente'}>Voltar</Link>
               </Button>
 
               <Button
