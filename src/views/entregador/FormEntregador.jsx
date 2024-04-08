@@ -43,7 +43,7 @@ export default function FormEntregador() {
 	const [enderecoCidade, setEnderecoCidade] = useState();
 	const [enderecoUf, setEnderecoUf] = useState();
 	const [enderecoEstado, setEnderecoEstado] = useState();
-	const [enderecoComplemento, setEnderecoComplemento] = useState();
+	const [enderecoCompleto, setEnderecoCompleto] = useState();
 	const [ativo, setAtivo] = useState(true);
 
 	useEffect(() => {
@@ -65,7 +65,7 @@ export default function FormEntregador() {
 					setEnderecoCep(response.data.enderecoCep)
 					setEnderecoCidade(response.data.enderecoCidade)
 					setEnderecoEstado(response.data.enderecoEstado)
-					setEnderecoComplemento(response.data.enderecoComplemento)
+					setEnderecoCompleto(response.data.enderecoCompleto)
 					setEnderecoUf(response.data.enderecoUf)
 				})
 		}
@@ -104,7 +104,7 @@ export default function FormEntregador() {
 			enderecoCidade: enderecoCidade,
 			enderecoUf: enderecoUf,
 			enderecoEstado: enderecoEstado,
-			enderecoComplemento: enderecoComplemento,
+			enderecoCompleto: enderecoCompleto,
 			ativo: ativo
 		}
 
@@ -292,17 +292,17 @@ export default function FormEntregador() {
 								label='UF'
 								options={ufList}
 								placeholder='Selecione'
-								value={enderecoEstado}
+								value={enderecoUf}
 								onChange={(e, { value }) => {
-									setEnderecoEstado(value)
+									setEnderecoUf(value)
 								}}
 							/>
 
 							<Form.Input
 								fluid
 								label='Complemento'
-								value={enderecoComplemento}
-								onChange={e => setEnderecoComplemento(e.target.value)}
+								value={enderecoCompleto}
+								onChange={e => setEnderecoCompleto(e.target.value)}
 							/>
 
 							<Form.Group inline>

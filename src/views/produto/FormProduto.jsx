@@ -1,14 +1,14 @@
 import axios from 'axios';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function FormProduto () {
+export default function FormProduto() {
 
 	const { state } = useLocation();
-
 	const [idProduto, setIdProduto] = useState();
+
 	const [codigo, setCodigo] = useState();
 	const [titulo, setTitulo] = useState();
 	const [descricao, setDescricao] = useState();
@@ -18,52 +18,68 @@ export default function FormProduto () {
 	const [listaCategoria, setListaCategoria] = useState([]);
 	const [idCategoria, setIdCategoria] = useState();
 
+console.log(idProduto)
+	useEffect(() => {
+		if (state != null && state.id != null) {
+			axios.get("http://localhost:8080/api/produto/" + state.id)
+				.then((response) => {
+					setIdProduto(response.data.id)
+					setCodigo(response.data.codigo)
+					setTitulo(response.data.titulo)
+					setDescricao(response.data.descricao)
+					setValorUnitario(response.data.valorUnitario)
+					setTempoEntregaMinimo(response.data.tempoEntregaMinimo)
+					setTempoEntregaMaximo(response.data.tempoEntregaMaximo)
+			
+				})
+		}
+	}, [state])
 	function salvar() {
 
 		let produtoRequest = {
 
-			idCategoria: idCategoria,
 			codigo: codigo,
 			titulo: titulo,
 			descricao: descricao,
-			valorUnitario: valorUnitario,
-			tempoEntregaMinimo: tempoEntregaMinimo,
-			tempoEntregaMaximo: tempoEntregaMaximo
+			valorUnitario: parseFloat(valorUnitario),
+			tempoEntregaMinimo: parseInt(tempoEntregaMinimo),
+			tempoEntregaMaximo: parseInt(tempoEntregaMaximo)
+
 		}
 
 		if (idProduto != null) { //Alteração:
 
 			axios.put("http://localhost:8080/api/produto/" + idProduto, produtoRequest)
-			.then((response) => { console.log('Produto alterado com sucesso.') })
-			.catch((error) => { console.log('Erro ao alterar um produto.') })
+				.then((response) => { console.log('Produto alterado com sucesso.') })
+				.catch((error) => { console.log('Erro ao alterar um produto.') })
 
 		} else { //Cadastro:
 
 			axios.post("http://localhost:8080/api/produto", produtoRequest)
-			.then((response) => { console.log('Produto cadastrado com sucesso.') })
-			.catch((error) => { console.log('Erro ao incluir o produto.') })
+				.then((response) => { console.log('Produto cadastrado com sucesso.') })
+				.catch((error) => { console.log('Erro ao incluir o produto.') })
 		}
 	}
 
-	return(
+	return (
 		<div>
 
 			<MenuSistema tela={'produto'} />
 
-			<div style={{marginTop: '3%'}}>
+			<div style={{ marginTop: '3%' }}>
 
 				<Container textAlign='justified' >
 
-					{ idProduto === undefined &&
-						<h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+					{idProduto === undefined &&
+						<h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
 					}
-					{ idProduto !== undefined &&
-						<h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+					{idProduto != undefined &&
+						<h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
 					}
 
 					<Divider />
 
-					<div style={{marginTop: '4%'}}>
+					<div style={{ marginTop: '4%' }}>
 
 						<Form>
 
@@ -102,7 +118,7 @@ export default function FormProduto () {
 								label='Categoria'
 								options={listaCategoria}
 								value={idCategoria}
-								onChange={(e,{value}) => {
+								onChange={(e, { value }) => {
 									setIdCategoria(value)
 								}}
 							/>
@@ -128,7 +144,7 @@ export default function FormProduto () {
 									value={valorUnitario}
 									onChange={e => setValorUnitario(e.target.value)}
 								/>
-								
+
 								<Form.Input
 									fluid
 									placeholder='30'
@@ -139,7 +155,7 @@ export default function FormProduto () {
 									value={tempoEntregaMinimo}
 									onChange={e => setTempoEntregaMinimo(e.target.value)}
 								/>
-								
+
 								<Form.Input
 									fluid
 									placeholder='40'
@@ -152,7 +168,7 @@ export default function FormProduto () {
 								/>
 							</Form.Group>
 
-							<Form.Group widths='equal' style={{marginTop: '4%', justifyContent:'space-between'}}>
+							<Form.Group widths='equal' style={{ marginTop: '4%', justifyContent: 'space-between' }}>
 
 								<Button
 									tabIndex='8'
@@ -160,7 +176,7 @@ export default function FormProduto () {
 									circular
 									color='orange'
 									icon='reply'
-									as={Link} 
+									as={Link}
 									to='/list-produto'
 								/>
 
