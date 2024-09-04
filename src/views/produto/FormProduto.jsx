@@ -34,7 +34,7 @@ export default function FormProduto() {
 				})
 		}
 
-		axios.get("http://localhost:8080/api/produto/" + "api/categoriaproduto")
+		axios.get("http://localhost:8080/" + "api/categoriaproduto")
        .then((response) => {
            const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
            setListaCategoria(dropDownCategorias);
@@ -132,19 +132,6 @@ export default function FormProduto() {
 								/>
 
 							</Form.Group>
-
-							<Form.Select
-								required
-								fluid
-								tabIndex='3'
-								placeholder='Selecione'
-								label='Categoria'
-								options={listaCategoria}
-								value={idCategoria}
-								onChange={(e, { value }) => {
-									setIdCategoria(value)
-								}}
-							/>
 
 							<Form.TextArea
 								label='Descrição'
